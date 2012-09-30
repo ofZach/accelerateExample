@@ -92,7 +92,7 @@ void testApp::draw(){
     ofDrawBitmapStringHighlight("all generated shapes", ofPoint(600,300));
     
 
-    ofDrawBitmapStringHighlight("press '1'  to generate more shapes\npress ' ' to calculate closest\nnote: I've noticed  this be slow the first couple of times on solving...", ofPoint(30,400));
+    ofDrawBitmapStringHighlight("press '1'  to generate more shapes\npress ' ' to calculate closest, 'h' for by hand\nnote: I've noticed  this be slow the first couple of times on solving...", ofPoint(30,400));
     
     
     ofDrawBitmapStringHighlight("elapsedTime " + ofToString(elapsedTime), ofPoint(30,450));
