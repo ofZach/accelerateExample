@@ -20,5 +20,7 @@ class testApp : public ofBaseApp{
 		void gotMessage(ofMessage msg);
 		
         float elapsedTime;
+        float nonAccerateTime;
+    
     
 };

@@ -96,6 +96,10 @@ void testApp::draw(){
     
     
     ofDrawBitmapStringHighlight("elapsedTime " + ofToString(elapsedTime), ofPoint(30,450));
+    ofDrawBitmapStringHighlight("elapsedTime (by hand) " + ofToString(nonAccerateTime), ofPoint(30,500));
+    
+    
+    
 }
 
 //--------------------------------------------------------------
@@ -138,6 +142,35 @@ void testApp::keyPressed(int key){
         }
         
         elapsedTime = ofGetElapsedTimef() - startTime;
+    } else if (key == 'h'){
+        
+        float startTime = ofGetElapsedTimef();
+        float smallest = 1000000000;
+        
+        for (int i = 0; i < howMany*256; i++){
+            xvals[i] = xvalsOrig[i] - xvalsFrom[i];
+            yvals[i] = yvalsOrig[i] - yvalsFrom[i];
+            outVector[i] = sqrt( xvals[i]* xvals[i] + yvals[i]*yvals[i]);
+        }
+        
+        for (int i = 0; i< howMany; i++){
+            float avg = 0;
+            for (int j = 0; j < 256; j++){
+                avg += outVector[i*256 + j] / 256.0;
+            }
+            results[i] = avg;
+        }
+        
+        for (int i = 0; i< howMany; i++){
+            if (*(results + i) < smallest){
+                smallest = *(results + i);
+                smallestIndex = i;
+            }
+        }
+        
+        nonAccerateTime = ofGetElapsedTimef()- startTime;
+        
+        
     }
     
 }
