@@ -145,32 +145,25 @@ void testApp::keyPressed(int key){
     } else if (key == 'h'){
         
         float startTime = ofGetElapsedTimef();
-        float smallest = 1000000000;
+        float smallest = FLT_MAX;
+        float avg = 0;
         
         for (int i = 0; i < howMany*256; i++){
-            xvals[i] = xvalsOrig[i] - xvalsFrom[i];
-            yvals[i] = yvalsOrig[i] - yvalsFrom[i];
-            outVector[i] = sqrt( xvals[i]* xvals[i] + yvals[i]*yvals[i]);
-        }
-        
-        for (int i = 0; i< howMany; i++){
-            float avg = 0;
-            for (int j = 0; j < 256; j++){
-                avg += outVector[i*256 + j] / 256.0;
-            }
-            results[i] = avg;
-        }
-        
-        for (int i = 0; i< howMany; i++){
-            if (*(results + i) < smallest){
-                smallest = *(results + i);
-                smallestIndex = i;
+            avg +=  (xvalsOrig[i] - xvalsFrom[i]) * (xvalsOrig[i] - xvalsFrom[i])
+                +   (yvalsOrig[i] - yvalsFrom[i]) * (yvalsOrig[i] - yvalsFrom[i]);
+            
+            if((i + 1) % 256 == 0 ){
+                avg /= 256.0;
+                
+                if( avg < smallest ){
+                    smallest = avg;
+                    smallestIndex = i / 256;
+                }
+                avg = 0;
             }
         }
         
-        nonAccerateTime = ofGetElapsedTimef()- startTime;
-        
-        
+        nonAccerateTime = ofGetElapsedTimef() - startTime;
     }
     
 }
